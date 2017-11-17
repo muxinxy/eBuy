@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.getWritableDatabase();
 
         final Button login = findViewById(R.id.login);
-        final Button signin= findViewById(R.id.signin);
+        final Button signup= findViewById(R.id.signup);
         final EditText login_username=findViewById(R.id.login_username);
         final EditText login_passward=findViewById(R.id.login_passward);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(intent);
                             Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                            onDestroy();
                     }else Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -69,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        signin.setOnClickListener(new View.OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("signin");
+                Intent intent = new Intent("android.intent.action.SIGN");
                 startActivity(intent);
             }
         });
@@ -80,5 +81,8 @@ public class MainActivity extends AppCompatActivity {
     }
     protected void onRestart(){
         super.onRestart();
+    }
+    protected void onDestroy(){
+        super.onDestroy();
     }
 }

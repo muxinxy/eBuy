@@ -4,7 +4,16 @@
     <string name="signin">注册</string>
     <string name="username">用户名</string>
     <string name="password">密码</string>
-    <string name="signyes">确认</string>
-    <string name="signno">取消</string>
-    <string name="repassword">确认密码</string>
+    <string name="sign_yes">确认</string>
+    <string name="sign_no">取消</string>
+    <string name="re_password">确认密码</string>
+    <string name="person">个人资料</string>
+    <string name="shop">商铺</string>
+    <string name="good">商品</string>
+    <string name="car">购物车</string>
+    <string name="order">订单</string>
+    <string name="about">关于</string>
+    <string name="quit">退出登录</string>
+    <string name="other">其他</string>
+    <string name="m">牧心</string>
 </resources>

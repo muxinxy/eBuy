@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.zz.ebuy.signin">
+    tools:context="com.example.zz.ebuy.SignUp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,13 +27,14 @@
             <EditText
                 android:layout_width="200sp"
                 android:layout_height="45sp"
-                android:id="@+id/signin_username"
+                android:id="@+id/sign_username"
                 android:inputType="textEmailSubject"
                 tools:ignore="LabelFor"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0sp"
+            android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -44,47 +45,53 @@
             <EditText
                 android:layout_width="200sp"
                 android:layout_height="45sp"
-                android:id="@+id/signin_passward"
+                android:id="@+id/sign_password"
                 android:inputType="textPassword"
                 tools:ignore="LabelFor" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0sp"
+            android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/repassword"
+                android:text="@string/re_password"
                 android:paddingStart="@android:dimen/app_icon_size"
                 tools:ignore="RtlSymmetry" />
             <EditText
                 android:layout_width="200sp"
                 android:layout_height="45sp"
-                android:id="@+id/resignin_passward"
+                android:id="@+id/re_sign_password"
                 android:inputType="textPassword"
                 tools:ignore="LabelFor" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="0sp"
+            android:layout_weight="3"
+            android:orientation="vertical"
             android:layout_marginTop="100dp">
             <Button
-                android:layout_width="0sp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:id="@+id/signyes"
-                android:text="@string/signyes"
-                android:background="@android:color/background_dark"
-                style="?android:buttonBarButtonStyle"/>
+                android:layout_gravity="center"
+                android:id="@+id/sign_yes"
+                android:text="@string/sign_yes"
+                android:background="@color/colorButton"
+                style="?android:buttonBarButtonStyle"
+                tools:ignore="NestedWeights" />
             <Button
-                android:layout_width="0sp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:id="@+id/signno"
-                android:text="@string/signno"
-                android:background="@android:color/darker_gray"
+                android:layout_gravity="center"
+                android:id="@+id/sign_no"
+                android:text="@string/sign_no"
+                android:background="@color/colorButton"
+                android:layout_marginTop="10dp"
                 style="?android:buttonBarButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
