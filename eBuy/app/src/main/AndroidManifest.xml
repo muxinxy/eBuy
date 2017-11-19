@@ -25,15 +25,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main2Activity"
+        <activity
+            android:name=".Main2Activity"
             android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN2"/>
+                <action android:name="android.intent.action.MAIN2" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Add">
+            <intent-filter>
+                <action android:name="android.intent.action.ADD"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Add"
-            android:theme="@style/ToolBar"></activity>
+        <activity android:name=".ShopActivity"></activity>
     </application>
 
 </manifest>

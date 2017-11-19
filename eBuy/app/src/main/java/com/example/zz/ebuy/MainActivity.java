@@ -79,10 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    protected void onRestart(){
-        super.onRestart();
-    }
-    protected void onDestroy(){
-        super.onDestroy();
-    }
+
+
 }
+

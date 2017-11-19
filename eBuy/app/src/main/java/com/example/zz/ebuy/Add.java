@@ -15,13 +15,15 @@ public class Add extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        Toolbar ToolBar = findViewById(R.id.ToolBar);
-        setSupportActionBar(ToolBar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button AddShop_yes = findViewById(R.id.AddShop_yes);
         Button AddShop_no = findViewById(R.id.AddShop_no);
+        toolbar.setLogo(R.drawable.ebuy);
+        toolbar.setTitle("eBuy");
 
-        ToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();;
@@ -31,7 +33,7 @@ public class Add extends AppCompatActivity {
         AddShop_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(Add.this, Main2Activity.class);
+                Intent intent =new Intent("android.intent.action.MAIN2");
                 startActivity(intent);
             }
         });
