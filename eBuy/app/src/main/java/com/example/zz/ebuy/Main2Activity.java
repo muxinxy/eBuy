@@ -1,6 +1,9 @@
 package com.example.zz.ebuy;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,15 +18,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class Main2Activity extends AppCompatActivity {
 
     private DrawerLayout mydrawerLayout;
-    private Shop[] shops={new Shop("123",R.drawable.about),new Shop("456",R.drawable.car)};
+    private Shop[] shops={};
     private List<Shop> shopList=new ArrayList<>();
+    private SQLiteOpenHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,19 @@ public class Main2Activity extends AppCompatActivity {
         });
     }
 
+
     private void initShops() {
+        SQLiteDatabase sdb = dbHelper.getReadableDatabase();
+        Cursor cursor=sdb.query("shopdata",null,null,null,null,null,null);
+        if (cursor.moveToFirst()) {
+            do {
+                String shop_name=cursor.getString(cursor.getColumnIndex("shopname"));
+
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        sdb.close();
         shopList.clear();
         for (int i=0;i<10;i++){
             Random random=new Random();
