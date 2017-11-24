@@ -11,44 +11,53 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class Main2Activity extends AppCompatActivity {
 
     private DrawerLayout mydrawerLayout;
-    private Shop[] shops={};
     private List<Shop> shopList=new ArrayList<>();
     private SQLiteOpenHelper dbHelper;
+    ShopAdapter ShopAdapter;
 
+    public Main2Activity(SQLiteOpenHelper dbHelper) {
+        this.dbHelper = dbHelper;
+    }
+
+    public void setUI(){
+        shopList.add(new Shop("店铺","123"));
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        StaggeredGridLayoutManager LayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL) ;
+        recyclerView .setLayoutManager(LayoutManager );
+        ShopAdapter = new ShopAdapter(shopList);
+        recyclerView.setAdapter(ShopAdapter);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_main2);
         setSupportActionBar(toolbar);
         mydrawerLayout=findViewById(R.id.drawer_layout);
         NavigationView navView=findViewById(R.id.nav_view);
         ActionBar actionBar=getSupportActionBar();
-        initShops();
-
-        RecyclerView recyclerView=findViewById(R.id.recycler_view);
-        GridLayoutManager layoutManager=new GridLayoutManager(this,2);
-
-        recyclerView.setLayoutManager(layoutManager);
-        ShopAdapter adapter = new ShopAdapter(shopList);
-        recyclerView.setAdapter(adapter);
+        Intent intent=getIntent();
+        String username=intent.getStringExtra("username");
+        try {
+            initShops();
+            setUI();
+        }catch (Exception e){
+            Toast.makeText(Main2Activity.this,"加载错误",Toast.LENGTH_SHORT).show();
+        }
 
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -62,26 +71,27 @@ public class Main2Activity extends AppCompatActivity {
                 return true;
             }
         });
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+
+
     }
 
-
-    private void initShops() {
-        SQLiteDatabase sdb = dbHelper.getReadableDatabase();
-        Cursor cursor=sdb.query("shopdata",null,null,null,null,null,null);
-        if (cursor.moveToFirst()) {
-            do {
-                String shop_name=cursor.getString(cursor.getColumnIndex("shopname"));
-
-
-            }while (cursor.moveToNext());
-        }
-        cursor.close();
-        sdb.close();
-        shopList.clear();
-        for (int i=0;i<10;i++){
-            Random random=new Random();
-            int intdex=random.nextInt(shops.length);
-            shopList.add(shops[intdex]);
+    public void initShops() {
+        try {
+            SQLiteDatabase sdb = dbHelper.getReadableDatabase();
+            Cursor cursor=sdb.query("shopdata",null,null,null,null,null,null);
+            if (cursor!=null&&cursor.getCount()!=0&&cursor.moveToFirst()) {
+                do {
+                    String shop_name=cursor.getString(cursor.getColumnIndex("shopname"));
+                    String shop_image=cursor.getString(cursor.getColumnIndex("shopimage"));
+                    shopList.add(new Shop(shop_name,shop_image));
+                }while (cursor.moveToNext());
+            }
+            assert cursor != null;
+            cursor.close();
+        }catch (Exception e){
+            Toast.makeText(Main2Activity.this,"加载错误",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,12 +108,8 @@ public class Main2Activity extends AppCompatActivity {
             case R.id.AddShop:
                 Intent intent=new Intent("android.intent.action.ADD");
                 startActivity(intent);break;
-            case R.id.AddGood:
-                Toast.makeText(Main2Activity.this,"AddGood",Toast.LENGTH_SHORT).show();break;
             case R.id.SearchShop:
                 Toast.makeText(Main2Activity.this,"SearchShop",Toast.LENGTH_SHORT).show();break;
-            case R.id.SearchGood:
-                Toast.makeText(Main2Activity.this,"SearchGood",Toast.LENGTH_SHORT).show();break;
             default:
         }
         return true;

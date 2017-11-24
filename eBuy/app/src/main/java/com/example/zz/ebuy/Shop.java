@@ -1,20 +1,20 @@
 package com.example.zz.ebuy;
 
-/**
- * Created by zz on 2017/11/18.
- */
+import android.graphics.Bitmap;
+
+import java.net.URI;
 
 public class Shop {
     private String name;
-    private int imageId;
-    public Shop(String name,int imageId){
+    private String imageId;
+    Shop(String name, String imageId){
         this.name=name;
         this.imageId=imageId;
     }
     public String getName(){
         return name;
     }
-    public int getImageId(){
+    String getImageId(){
         return imageId;
     }
 }

@@ -16,4 +16,5 @@
     <string name="quit">退出登录</string>
     <string name="other">其他</string>
     <string name="m">牧心</string>
+    <string name="nickname">昵称</string>
 </resources>

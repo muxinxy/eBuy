@@ -10,10 +10,6 @@
             android:icon="@drawable/shop"
             android:title="@string/shop"/>
         <item
-            android:id="@+id/nav_good"
-            android:icon="@drawable/good"
-            android:title="@string/good"/>
-        <item
             android:id="@+id/nav_car"
             android:icon="@drawable/car"
             android:title="@string/car"/>

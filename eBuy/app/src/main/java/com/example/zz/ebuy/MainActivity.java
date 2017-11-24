@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         final Button signup= findViewById(R.id.signup);
         final EditText login_username=findViewById(R.id.login_username);
         final EditText login_passward=findViewById(R.id.login_passward);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         toolbar.setLogo(R.drawable.ebuy);
         toolbar.setTitle("eBuy");
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(intent);
                             Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                            intent.putExtra("username",login_username.getText().toString().trim());
                             onDestroy();
                     }else Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
                 }
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                     }while (cursor.moveToNext());
                 }
                 cursor.close();
-                sdb.close();
                 return false;
             }
         });

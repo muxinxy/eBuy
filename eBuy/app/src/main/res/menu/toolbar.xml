@@ -8,17 +8,8 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/AddGood"
-        android:title="增加商品"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/SearchShop"
         android:title="搜索店铺"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/SearchGood"
-        android:title="搜索商品"
-        app:showAsAction="never" />
 </menu>

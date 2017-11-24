@@ -2,6 +2,7 @@ package com.example.zz.ebuy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,35 +10,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
 
-    private static final String TAG = "ShopAdapter";
-
     private Context mContext;
 
-    private List<Shop> mShopList;
+    private List<Shop> ShopList;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        View shopView;
         CardView cardView;
         ImageView shopImage;
         TextView shopName;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
+            shopView=view;
             cardView = (CardView) view;
-            shopImage = (ImageView) view.findViewById(R.id.shop_image);
-            shopName = (TextView) view.findViewById(R.id.shop_name);
+            shopImage = view.findViewById(R.id.shop_image);
+            shopName = view.findViewById(R.id.shop_name);
         }
     }
 
-    public ShopAdapter(List<Shop> shopList) {
-        mShopList = shopList;
+    ShopAdapter(List<Shop> shopList) {
+        ShopList = shopList;
     }
 
     @Override
@@ -46,20 +45,28 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
             mContext = parent.getContext();
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.shop_item, parent, false);
-        final ViewHolder holder = new ViewHolder(view);
-        return holder;
+        final ViewHolder holder=new ViewHolder(view);
+        holder.shopView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position=holder.getAdapterPosition();
+                Shop shop=ShopList.get(position);
+                Intent intent=new Intent(v.getContext(),Add.class);
+            }
+        });
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Shop shop = mShopList.get(position);
+        Shop shop = ShopList.get(position);
         holder.shopName.setText(shop.getName());
-        Glide.with(mContext).load(shop.getImageId()).into(holder.shopImage);
+        Glide.with(mContext).load(shop.getImageId()).asBitmap().error(R.drawable.shop0).into(holder.shopImage);
     }
 
     @Override
     public int getItemCount() {
-        return mShopList.size();
+        return ShopList.size();
     }
 
 }

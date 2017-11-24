@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zz.ebuy">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGEW" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ebuy"
@@ -27,21 +31,35 @@
         </activity>
         <activity
             android:name=".Main2Activity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/Main2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN2" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Add">
+        <activity android:name=".Add">
             <intent-filter>
-                <action android:name="android.intent.action.ADD"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.ADD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ShopActivity"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.cameraalbumtest.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name=".Person"></activity>
+        <activity android:name=".Good"></activity>
     </application>
 
 </manifest>
