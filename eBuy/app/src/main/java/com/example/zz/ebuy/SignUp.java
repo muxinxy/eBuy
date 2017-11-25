@@ -51,12 +51,11 @@ public class SignUp extends AppCompatActivity {
                     values.put("nickname",sign_nickname.getText().toString().trim());
                     values.put("username", sign_username.getText().toString().trim());
                     values.put("password", sign_password.getText().toString().trim());
-                    values.put("tel","0");
-                    values.put("address","0");
                     db.insert("userdata", null, values);
                     values.clear();
                     Toast.makeText(SignUp.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignUp.this, Main2Activity.class);
+                    intent.putExtra("username_intent",sign_username.getText().toString().trim());
                     startActivity(intent);
                 }
             }

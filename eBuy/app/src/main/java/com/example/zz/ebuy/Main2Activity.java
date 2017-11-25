@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -26,69 +27,71 @@ public class Main2Activity extends AppCompatActivity {
 
     private DrawerLayout mydrawerLayout;
     private List<Shop> shopList=new ArrayList<>();
-    private SQLiteOpenHelper dbHelper;
-    ShopAdapter ShopAdapter;
-
-    public Main2Activity(SQLiteOpenHelper dbHelper) {
-        this.dbHelper = dbHelper;
-    }
+    private MyDatabaseHelper dbHelper;
+    private ShopAdapter ShopAdapter;
 
     public void setUI(){
-        shopList.add(new Shop("店铺","123"));
+        shopList.add(new Shop("店铺",R.drawable.shop));
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        StaggeredGridLayoutManager LayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL) ;
-        recyclerView .setLayoutManager(LayoutManager );
+        GridLayoutManager layoutManager=new GridLayoutManager(this,2);
+        recyclerView .setLayoutManager(layoutManager);
         ShopAdapter = new ShopAdapter(shopList);
         recyclerView.setAdapter(ShopAdapter);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        dbHelper =new MyDatabaseHelper(this,"UserData.db",null,1) ;
+        dbHelper.getWritableDatabase();
+
         Toolbar toolbar = findViewById(R.id.toolbar_main2);
         setSupportActionBar(toolbar);
+        ActionBar actionBar=getSupportActionBar();
+
         mydrawerLayout=findViewById(R.id.drawer_layout);
         NavigationView navView=findViewById(R.id.nav_view);
-        ActionBar actionBar=getSupportActionBar();
+
         Intent intent=getIntent();
-        String username=intent.getStringExtra("username");
-        try {
-            initShops();
-            setUI();
-        }catch (Exception e){
-            Toast.makeText(Main2Activity.this,"加载错误",Toast.LENGTH_SHORT).show();
-        }
+        final String username_intent=intent.getStringExtra("username_intent");
+
+        initShops();
+        setUI();
 
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.menu);
         }
-        navView.setCheckedItem(R.id.username);
+
+        navView.setCheckedItem(R.id.username_header);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_person:
+                        Intent intent=new Intent(Main2Activity.this,Person.class);
+                        startActivityForResult(intent,1);
+                        intent.putExtra("username",username_intent);
+                }
                 mydrawerLayout.closeDrawers();
                 return true;
             }
         });
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-
-
     }
 
     public void initShops() {
         try {
             SQLiteDatabase sdb = dbHelper.getReadableDatabase();
             Cursor cursor=sdb.query("shopdata",null,null,null,null,null,null);
-            if (cursor!=null&&cursor.getCount()!=0&&cursor.moveToFirst()) {
+            if (cursor.moveToFirst()) {
                 do {
                     String shop_name=cursor.getString(cursor.getColumnIndex("shopname"));
-                    String shop_image=cursor.getString(cursor.getColumnIndex("shopimage"));
-                    shopList.add(new Shop(shop_name,shop_image));
+
+                    shopList.add(new Shop(shop_name,R.drawable.shop));
                 }while (cursor.moveToNext());
             }
-            assert cursor != null;
             cursor.close();
         }catch (Exception e){
             Toast.makeText(Main2Activity.this,"加载错误",Toast.LENGTH_SHORT).show();

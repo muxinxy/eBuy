@@ -6,10 +6,6 @@
             android:icon="@drawable/person"
             android:title="@string/person"/>
         <item
-            android:id="@+id/nav_shop"
-            android:icon="@drawable/shop"
-            android:title="@string/shop"/>
-        <item
             android:id="@+id/nav_car"
             android:icon="@drawable/car"
             android:title="@string/car"/>

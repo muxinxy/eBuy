@@ -8,6 +8,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String User="create table userdata("
             + "id integer primary key autoincrement,"
+            +"icon_image text"
             + "nickname text,"
             + "username text,"
             + "password text,"
@@ -31,7 +32,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             +"tel integer,"
             +"address text)";
 
-    private static final String Car="create table orderdata("
+    private static final String Car="create table cardata("
             +"id integer primary key autoincrement,"
             +"shopname text,"
             +"goodname text)";

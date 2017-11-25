@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
                 if (check1()) {
                     if (check2()){
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                            intent.putExtra("username_intent",login_username.getText().toString().trim());
                             startActivity(intent);
                             Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                            intent.putExtra("username",login_username.getText().toString().trim());
                             onDestroy();
                     }else Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
                 }
