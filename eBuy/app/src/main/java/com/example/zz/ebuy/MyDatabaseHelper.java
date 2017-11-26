@@ -8,7 +8,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String User="create table userdata("
             + "id integer primary key autoincrement,"
-            +"icon_image text"
+            +"icon_image text,"
             + "nickname text,"
             + "username text,"
             + "password text,"
@@ -55,6 +55,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists userdata") ;
         db.execSQL("drop table if exists shopdata");
         db.execSQL("drop table if exists gooddata");
+        db.execSQL("drop table if exists orderdata");
+        db.execSQL("drop table if exists cardata");
         onCreate(db) ;
     }
 }

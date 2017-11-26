@@ -148,12 +148,13 @@ public class Add extends AppCompatActivity {
             case CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK) {
                     // 判断手机系统版本号
-                    if (Build.VERSION.SDK_INT>=19)
+                    if (Build.VERSION.SDK_INT>=19){
                     // 4.4及以上系统使用这个方法处理图片
                     handleImageOnKitKat(data);
                 }else {
                     //4.4以下系统使用这个方法处理图片
                     handleImageBeforeKitKat(data);
+                }
                 }
                 break;
             default:
@@ -218,16 +219,6 @@ public class Add extends AppCompatActivity {
         } else {
             Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public static byte[] bitmapToBytes(Bitmap bitmap){
-        if (bitmap == null) {
-            return null;
-        }
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        // 将Bitmap压缩成PNG编码，质量为100%存储
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);//除了PNG还有很多常见格式，如jpeg等
-        return os.toByteArray();
     }
 
 protected void onDestroy(){

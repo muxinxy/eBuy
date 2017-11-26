@@ -18,7 +18,12 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,6 @@ public class Main2Activity extends AppCompatActivity {
     private ShopAdapter ShopAdapter;
 
     public void setUI(){
-        shopList.add(new Shop("店铺",R.drawable.shop));
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView .setLayoutManager(layoutManager);
@@ -54,6 +58,7 @@ public class Main2Activity extends AppCompatActivity {
         mydrawerLayout=findViewById(R.id.drawer_layout);
         NavigationView navView=findViewById(R.id.nav_view);
 
+
         Intent intent=getIntent();
         final String username_intent=intent.getStringExtra("username_intent");
 
@@ -66,14 +71,44 @@ public class Main2Activity extends AppCompatActivity {
         }
 
         navView.setCheckedItem(R.id.username_header);
+        View headerView = navView.getHeaderView(0);
+        ImageView icon_image = headerView.findViewById(R.id.icon_image);
+        TextView username_header=headerView.findViewById(R.id.username_header);
+        SQLiteDatabase sdb = dbHelper.getReadableDatabase();
+        Cursor cursor=sdb.query("userdata",null,null,null,null,null,null);
+        if (cursor.moveToFirst()) {
+            do {
+                String username=cursor.getString(cursor.getColumnIndex("username"));
+                String nickname=cursor.getString(cursor.getColumnIndex("nickname"));
+                String userimage=cursor.getColumnName(cursor.getColumnIndex("icon_image"));
+                if (username.equals(username_intent)){
+                    username_header.setText(nickname);
+                    Glide.with(this).load(userimage).asBitmap().placeholder(R.drawable.header).error(R.drawable.header).into(icon_image);
+                    break;
+                }
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_person:
                         Intent intent=new Intent(Main2Activity.this,Person.class);
-                        startActivityForResult(intent,1);
-                        intent.putExtra("username",username_intent);
+                        intent.putExtra("username_intent",username_intent);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.nav_about:
+                        Intent intent2=new Intent(Main2Activity.this,About.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_quit:
+                        Intent intent1=new Intent(Main2Activity.this,MainActivity.class);
+                        startActivity(intent1);
+                        finish();
                 }
                 mydrawerLayout.closeDrawers();
                 return true;
@@ -88,8 +123,8 @@ public class Main2Activity extends AppCompatActivity {
             if (cursor.moveToFirst()) {
                 do {
                     String shop_name=cursor.getString(cursor.getColumnIndex("shopname"));
-
-                    shopList.add(new Shop(shop_name,R.drawable.shop));
+                    String shop_image=cursor.getString(cursor.getColumnIndex("shopimage"));
+                    shopList.add(new Shop(shop_name,shop_image));
                 }while (cursor.moveToNext());
             }
             cursor.close();
@@ -110,7 +145,9 @@ public class Main2Activity extends AppCompatActivity {
                 mydrawerLayout.openDrawer(GravityCompat.START);break;
             case R.id.AddShop:
                 Intent intent=new Intent("android.intent.action.ADD");
-                startActivity(intent);break;
+                startActivity(intent);
+                finish();
+                break;
             case R.id.SearchShop:
                 Toast.makeText(Main2Activity.this,"SearchShop",Toast.LENGTH_SHORT).show();break;
             default:

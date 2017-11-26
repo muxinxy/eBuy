@@ -92,13 +92,13 @@ public class SignUp extends AppCompatActivity {
                     }while (cursor.moveToNext());
                 }
                 cursor.close();
+                sdb.close();
                 return false;
             }
         });
     }
     protected void onDestroy(){
         super.onDestroy();
-        dbHelper.close();
     }
 
 }

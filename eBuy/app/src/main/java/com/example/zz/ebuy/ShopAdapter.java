@@ -1,7 +1,6 @@
 package com.example.zz.ebuy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,7 +48,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         Shop shop = ShopList.get(position);
         holder.shopName.setText(shop.getName());
-        Glide.with(mContext).load(shop.getImageId()).asBitmap().error(R.drawable.shop).into(holder.shopImage);
+        Glide.with(mContext).load(shop.getImageId()).asBitmap().placeholder(R.drawable.shop).error(R.drawable.shop).into(holder.shopImage);
     }
 
     @Override

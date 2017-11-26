@@ -6,15 +6,15 @@ import java.net.URI;
 
 public class Shop {
     private String name;
-    private int imageId;
-    Shop(String name, int imageId){
+    private String imageId;
+    Shop(String name, String imageId){
         this.name=name;
         this.imageId=imageId;
     }
     public String getName(){
         return name;
     }
-    public int getImageId(){
+    public String getImageId(){
         return imageId;
     }
 }

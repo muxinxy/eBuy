@@ -55,30 +55,27 @@ public class Person extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_person);
         setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
-        if(actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.menu);
-        }
 
         SQLiteDatabase sdb = dbHelper.getReadableDatabase();
         Cursor cursor=sdb.query("userdata",null,null,null,null,null,null);
-        if (cursor!=null&&cursor.getCount()!=0&&cursor.moveToFirst()) {
+        if (cursor.getCount()!=0&&cursor.moveToFirst()) {
             do {
                 String username=cursor.getString(cursor.getColumnIndex("username"));
                 String nickname=cursor.getString(cursor.getColumnIndex("nickname"));
-                String header=cursor.getString(cursor.getColumnIndex("shopimage"));
-                String tel=cursor.getColumnName(cursor.getColumnIndex("tel"));
+                String header=cursor.getString(cursor.getColumnIndex("icon_image"));
+                int tel=cursor.getInt(cursor.getColumnIndex("tel"));
                 String address=cursor.getColumnName(cursor.getColumnIndex("address"));
                 if (username.equals(username_intent)){
                     person_username.setText(username);
                     person_nickname.setText(nickname);
-                    person_tel.setText(tel);
+                    String telphone=Integer.toString(tel);
+                    person_tel.setText(telphone);
                     person_address.setText(address);
-                    Glide.with(this).load(header).asBitmap().into(person_head);
+                    Glide.with(this).load(header).asBitmap().placeholder(R.drawable.header).error(R.drawable.header).into(person_head);
+                    break;
                 }
             }while (cursor.moveToNext());
         }
-        assert cursor != null;
         cursor.close();
 
         person_no.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +107,7 @@ public class Person extends AppCompatActivity {
             private boolean check1(){
                 if (person_nickname.getText().toString().equals("")){
                     Toast.makeText(Person.this, "昵称不能为空", Toast.LENGTH_SHORT).show();
-                }else if (person_nickname.getText().toString().contains("")){
+                }else if (person_nickname.getText().toString().contains(" ")){
                     Toast.makeText(Person.this,"不能包含空格",Toast.LENGTH_SHORT).show();
                 }else{
                     return true;

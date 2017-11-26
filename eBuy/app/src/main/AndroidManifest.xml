@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zz.ebuy">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGEW" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -46,7 +46,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShopActivity"></activity>
+        <activity android:name=".ShopActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -58,8 +58,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".Person"></activity>
-        <activity android:name=".Good"></activity>
+        <activity android:name=".Person" />
+        <activity android:name=".Good" />
+        <activity android:name=".About" />
+        <activity android:name=".Car" />
+        <activity android:name=".Order"></activity>
     </application>
 
 </manifest>
