@@ -34,9 +34,9 @@ public class ShopActivity extends AppCompatActivity {
         FloatingActionButton fab=findViewById(R.id.fab);
 
         dbHelper = new MyDatabaseHelper(this, "UserData.db", null, 1);
-        SQLiteDatabase sdb = dbHelper.getWritableDatabase();
 
         Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
         shopname_intent = bundle.getString("shopname_intent");
         String shopimage_intent = bundle.getString("shopimage_intent");
 
@@ -45,7 +45,7 @@ public class ShopActivity extends AppCompatActivity {
 
         initGoods();
         RecyclerView recyclerView = findViewById(R.id.shop_RecylerView);
-        GridLayoutManager layoutManager=new GridLayoutManager(this,1);
+        GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView .setLayoutManager(layoutManager);
         GoodAdapter = new GoodAdapter(goodList);
         recyclerView.setAdapter(GoodAdapter);

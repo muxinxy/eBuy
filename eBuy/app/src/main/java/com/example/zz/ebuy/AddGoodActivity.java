@@ -53,6 +53,7 @@ public class AddGoodActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         final String shopname_intent=intent.getStringExtra("shopname_intent");
+        final String shopimage_intent=intent.getStringExtra("shopimage_intent");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +97,10 @@ public class AddGoodActivity extends AppCompatActivity {
                     values.clear();
                     Toast.makeText(AddGoodActivity.this, "添加商品成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent("android.intent.action.SHOP");
+                    Bundle bundle=new Bundle();
+                    bundle.putString("shopname_intent",shopname_intent);
+                    bundle.putString("shopimage_intent",shopimage_intent);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
                 }

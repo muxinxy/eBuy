@@ -23,11 +23,13 @@ public class GoodAdapter extends RecyclerView.Adapter<GoodAdapter.ViewHolder>{
     private List<Good> GoodList;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
         ImageView goodImage;
         TextView goodName;
 
         public ViewHolder(View view) {
             super(view);
+            cardView = (CardView) view;
             goodImage = view.findViewById(R.id.good_image);
             goodName = view.findViewById(R.id.good_name);
         }

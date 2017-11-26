@@ -71,7 +71,8 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".CarActivity" />
         <activity android:name=".OrderActivity" />
-        <activity android:name=".AddGoodActivity"></activity>
+        <activity android:name=".AddGoodActivity" />
+        <activity android:name=".SearchShop"></activity>
     </application>
 
 </manifest>
