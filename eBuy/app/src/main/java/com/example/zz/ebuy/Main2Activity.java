@@ -167,7 +167,9 @@ public class Main2Activity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.SearchShop:
-                Toast.makeText(Main2Activity.this,"SearchShop",Toast.LENGTH_SHORT).show();break;
+                Intent intent1=new Intent(Main2Activity.this,SearchShop.class);
+                startActivity(intent1);
+                finish();
             default:
         }
         return true;
