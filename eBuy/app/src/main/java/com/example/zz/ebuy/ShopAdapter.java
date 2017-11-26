@@ -1,6 +1,8 @@
 package com.example.zz.ebuy;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,15 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
     private Context mContext;
 
     private List<Shop> ShopList;
+
+    public interface  onItemClickListener{
+        void onItemClick(View view ,int position);
+        void  onItemLongClick(View view,int position);
+    }
+    private ShopAdapter.onItemClickListener onItemClickListener;
+    public void setOnItemClickListener(ShopAdapter.onItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -45,10 +56,33 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Shop shop = ShopList.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final Shop shop = ShopList.get(position);
         holder.shopName.setText(shop.getName());
         Glide.with(mContext).load(shop.getImageId()).asBitmap().placeholder(R.drawable.shop).error(R.drawable.shop).into(holder.shopImage);
+
+        if(onItemClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(mContext,ShopActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("shopname_intent",shop.getName());
+                    bundle.putString("shopimage_intent",shop.getImageId());
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int layoutPos=holder.getLayoutPosition();
+                    onItemClickListener.onItemLongClick(holder.itemView,layoutPos);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override

@@ -4,32 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.zz.ebuy.Good">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:id="@+id/MachineBar"
-        android:background="@drawable/header"
-        android:layout_height="200dp">
+    tools:context="com.example.zz.ebuy.GoodActivity">
 
-        <TextView
-            android:id="@+id/good"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginEnd="10dp"
-            android:text="商品"
-            android:textColor="#ffffff"
-            android:gravity="center"/>
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="448dp"
-        android:id="@+id/hospitalRecylerView"
-        app:layout_behavior=""
-        />
-</LinearLayout>
 </android.support.constraint.ConstraintLayout>

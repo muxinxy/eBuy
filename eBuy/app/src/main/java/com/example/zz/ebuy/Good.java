@@ -1,13 +1,16 @@
 package com.example.zz.ebuy;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-public class Good extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_good);
+public class Good {
+    private String name;
+    private String imageId;
+    Good(String name, String imageId){
+        this.name=name;
+        this.imageId=imageId;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getImageId(){
+        return imageId;
     }
 }

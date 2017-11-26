@@ -22,6 +22,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String Good="create table gooddata("
             +"id integer primary key autoincrement,"
+            +"shopname text,"
             +"goodname text,"
             +"goodimage text)";
 

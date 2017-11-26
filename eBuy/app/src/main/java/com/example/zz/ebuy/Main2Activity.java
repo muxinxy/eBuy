@@ -3,7 +3,6 @@ package com.example.zz.ebuy;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,14 +32,6 @@ public class Main2Activity extends AppCompatActivity {
     private MyDatabaseHelper dbHelper;
     private ShopAdapter ShopAdapter;
 
-    public void setUI(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        GridLayoutManager layoutManager=new GridLayoutManager(this,2);
-        recyclerView .setLayoutManager(layoutManager);
-        ShopAdapter = new ShopAdapter(shopList);
-        recyclerView.setAdapter(ShopAdapter);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +47,17 @@ public class Main2Activity extends AppCompatActivity {
         mydrawerLayout=findViewById(R.id.drawer_layout);
         NavigationView navView=findViewById(R.id.nav_view);
 
+        final TextView shop_name=findViewById(R.id.shop_name);
 
         Intent intent=getIntent();
         final String username_intent=intent.getStringExtra("username_intent");
 
         initShops();
-        setUI();
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        GridLayoutManager layoutManager=new GridLayoutManager(this,2);
+        recyclerView .setLayoutManager(layoutManager);
+        ShopAdapter = new ShopAdapter(shopList);
+        recyclerView.setAdapter(ShopAdapter);
 
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -91,23 +85,47 @@ public class Main2Activity extends AppCompatActivity {
         cursor.close();
 
 
+        ShopAdapter.setOnItemClickListener(new ShopAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent=new Intent("android.intent.action.SHOP");
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(Main2Activity.this,"onLongClick"+position,Toast.LENGTH_SHORT).show();
+            }
+        });
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_person:
-                        Intent intent=new Intent(Main2Activity.this,Person.class);
+                        Intent intent=new Intent(Main2Activity.this,PersonActivity.class);
                         intent.putExtra("username_intent",username_intent);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.nav_about:
-                        Intent intent2=new Intent(Main2Activity.this,About.class);
+                        Intent intent2=new Intent(Main2Activity.this,AboutActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.nav_quit:
                         Intent intent1=new Intent(Main2Activity.this,MainActivity.class);
                         startActivity(intent1);
+                        finish();
+                        break;
+                    case R.id.nav_car:
+                        Intent intent3=new Intent(Main2Activity.this,CarActivity.class);
+                        startActivity(intent3);
+                        finish();
+                        break;
+                    case R.id.nav_order:
+                        Intent intent4=new Intent(Main2Activity.this,OrderActivity.class);
+                        startActivity(intent4);
                         finish();
                 }
                 mydrawerLayout.closeDrawers();
